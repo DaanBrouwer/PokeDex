@@ -1,0 +1,131 @@
+const typeDefs = `
+  schema {
+    query: Query
+    subscription: Subscription
+  }
+
+  # The Root Query for the application
+  type Query {
+    pokemon(id: ID!): Pokemon
+    allPokemon(page: Int!, size: Int!, query: String): PokemonPage!
+    type(id: ID!): Type
+    allTypes(page: Int!, size: Int!): TypePage!
+    allWeatherstations(page: Int!, size: Int!): WeatherstationPage!
+    weatherstation(id: ID!): Weatherstation
+  }
+
+  type Subscription {
+    news: String
+  }
+
+  interface Page {
+    last: Boolean!,
+    first: Boolean!,
+    totalElements: Int!,
+    totalPages: Int!,
+    size: Int!,
+    number: Int!
+  }
+
+  enum HeightUnit { 
+    METER 
+    DECIMETER 
+  }
+
+  enum WeightUnit { 
+    KILOGRAM 
+    HECTOGRAM 
+  }
+
+  type Pokemon {
+    id: ID!
+    name: String!
+    height(unit: HeightUnit = METER): Float!
+    weight(unit: WeightUnit = KILOGRAM): Float!
+
+    evolutions: [Pokemon!]
+    stats: [Stat!]!
+    sprites: Sprite!
+    types: [Type!]!
+  }
+
+  type PokemonPage implements Page {
+    content: [Pokemon!]!
+    last: Boolean!,
+    first: Boolean!,
+    totalElements: Int!,
+    totalPages: Int!,
+    size: Int!,
+    number: Int!
+  }
+
+  type Stat {
+    id: ID!
+    name: String!
+    value: Int!
+  }
+
+  type Sprite {
+    id: ID!
+    front: String!
+    back: String!
+  }
+
+  type Type {
+    id: ID!
+    name: String!
+    pokemon(page: Int!, size: Int!): PokemonPage!
+  }
+
+  type TypePage implements Page {
+    content: [Type!]!
+    last: Boolean!,
+    first: Boolean!,
+    totalElements: Int!,
+    totalPages: Int!,
+    size: Int!,
+    number: Int!
+  }
+
+  type Measurement {
+    id: ID!
+    value: String!,
+    date: String!
+  }
+
+  type Measurements {
+    uvindex: [Measurement!]!,
+    rainfall: [Measurement!]!,
+    airpressure: [Measurement!]!,
+    status: [Measurement!]!,
+    humidity: [Measurement!]!,
+    windspeed: [Measurement!]!,
+    temperature: [Measurement!]!
+  }
+
+  type Weatherstation {
+    id: ID!,
+    name: String!,
+    uvindex: String!,
+    rainfall: String!,
+    airpressure: String!,
+    status: String!,
+    humidity: String!,
+    windspeed: String!,
+    temperature: String!,
+    date: String!,
+    measurements: Measurements!
+  }
+
+  type WeatherstationPage implements Page {
+    content: [Weatherstation!]!
+    last: Boolean!,
+    first: Boolean!,
+    totalElements: Int!,
+    totalPages: Int!,
+    size: Int!,
+    number: Int!
+  }
+`;
+
+module.exports = { typeDefs } ;
