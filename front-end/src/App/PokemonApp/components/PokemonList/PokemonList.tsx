@@ -1,36 +1,35 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { GetAllPokemon, POKEMON_CACHE_KEY } from '../../PokemonServices';
 import {
   AsyncContent,
   Button,
   Empty,
   NotFound,
-  Pager,
   SearchInput
 } from '../../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { PokemonCard } from './components/PokemonCard';
 import { useQueryParam } from '../../../../hooks';
-import { faArrowLeft, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsSpin, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export function PokemonList() {
-  const page = useQueryParam('page', 1);
   const query = useQueryParam('query', '');
   const navigate = useNavigate();
-  const result = useQuery({
-    queryKey: [POKEMON_CACHE_KEY, '/pokemons', page, query],
-    queryFn: () => GetAllPokemon(page, query),
+  const result = useInfiniteQuery(
+    [POKEMON_CACHE_KEY, '/pokemons', query],
+    ({ pageParam }) => GetAllPokemon(pageParam, query),
+    {
+      getNextPageParam: (pages) => {
+        if (pages.number < pages.totalPages) {
+          return pages.number + 1;
+        }
+      },
+      keepPreviousData: true,
+      staleTime: 60000
+    }
+  );
 
-    keepPreviousData: true,
-    staleTime: 60000
-  });
-
-  function pageChanged(page: number) {
-    navigate(`?page=${page}&query=${query}`, {
-      replace: true
-    });
-  }
   function search(query: string) {
     navigate(`?page=1&query=${query}`, {
       replace: true
@@ -58,20 +57,40 @@ export function PokemonList() {
                 </Button>
               </Link>
             </div>
+            {pokemonPage.pages.map((pokemon) => (
+              <div className="grid grid-cols-3 gap-4 my-4" key={Math.random()}>
+                {pokemon.content.length === 0 ? (
+                  query ? (
+                    <NotFound>No Pokemon found</NotFound>
+                  ) : (
+                    <Empty>There are no pokemon yet</Empty>
+                  )
+                ) : (
+                  pokemon.content.map((singlePokemon) => (
+                    <PokemonCard
+                      key={singlePokemon.id}
+                      pokemon={singlePokemon}
+                    ></PokemonCard>
+                  ))
+                )}
+              </div>
+            ))}
 
-            {pokemonPage.content.length === 0 ? (
-              query ? (
-                <NotFound>No Pokemon found</NotFound>
-              ) : (
-                <Empty>There are no pokemon yet</Empty>
-              )
-            ) : null}
-            <div className="grid md:grid-cols-3 gap-4 my-4">
-              {pokemonPage.content.map((pokemon) => (
-                <PokemonCard key={pokemon.id} pokemon={pokemon}></PokemonCard>
-              ))}
-            </div>
-            <Pager page={pokemonPage} onChange={pageChanged}></Pager>
+            <Button
+              className="rounded-md "
+              onClick={() => result.fetchNextPage()}
+              disabled={!result.hasNextPage || result.isFetchingNextPage}
+            >
+              <FontAwesomeIcon
+                className="mr-4 flex center"
+                icon={faArrowsSpin}
+              ></FontAwesomeIcon>
+              {result.isFetchingNextPage
+                ? 'Loading more...'
+                : result.hasNextPage
+                ? 'Load More'
+                : 'Nothing more to load'}
+            </Button>
           </>
         )}
       </AsyncContent>
