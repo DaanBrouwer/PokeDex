@@ -1,0 +1,16 @@
+.mobile-menu > a {
+  will-change: transform;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
