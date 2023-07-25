@@ -3,7 +3,7 @@ import { Page } from '../../types';
 import { BarePokemon, Pokemon, BareStats, Type } from './PokemonTypes';
 
 export const POKEMON_CACHE_KEY = 'pokemon';
-export async function GetAllPokemon(page: number, query: string) {
+export async function GetAllPokemon(query: string, page?: number) {
   const response = await axios.get('/api/pokemon', {
     params: {
       size: 9,
@@ -14,7 +14,7 @@ export async function GetAllPokemon(page: number, query: string) {
   return response.data as Page<BarePokemon>;
 }
 
-export async function GetPokemon(id: string) {
+export async function GetPokemon(id: string | number) {
   const response = await axios.get(`/api/pokemon/${id}`);
 
   return response.data as Pokemon;

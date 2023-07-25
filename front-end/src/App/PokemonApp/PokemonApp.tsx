@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import { PokemonDetail } from './components/PokemonDetail/PokemonDetail';
 import { PokemonList } from './components/PokemonList/PokemonList';
-import { WeatherStationList } from './components/WeatherStationList/WeatherStationList';
 
 const PokemonEdit = lazy(() => import('./components/PokemonEdit/PokemonEdit'));
 const PokemonCreate = lazy(

@@ -1,14 +1,11 @@
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { Pokemon } from '../../PokemonTypes';
+import { AsyncContent } from '../../../../components';
 import {
   GetPokemon,
   POKEMON_CACHE_KEY,
-  getFormData,
-  postNewPokemon
+  getFormData
 } from '../../PokemonServices';
-import { successFlashMessage } from '../../../components/FlashMessages/flash-message-service';
-import { useQuery } from '@tanstack/react-query';
-import { AsyncContent } from '../../../../components';
 import { PokemonHookForm } from '../PokemonForm/PokemonHookForm';
 type PokemonDetailParam = {
   id: string;

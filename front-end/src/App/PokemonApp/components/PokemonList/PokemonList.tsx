@@ -18,7 +18,7 @@ export function PokemonList() {
   const navigate = useNavigate();
   const result = useInfiniteQuery(
     [POKEMON_CACHE_KEY, '/pokemons', query],
-    ({ pageParam }) => GetAllPokemon(pageParam, query),
+    ({ pageParam }) => GetAllPokemon(query, pageParam),
     {
       getNextPageParam: (pages) => {
         if (pages.number < pages.totalPages) {

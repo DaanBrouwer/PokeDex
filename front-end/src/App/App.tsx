@@ -1,7 +1,6 @@
 import { Ribbon } from './components/Ribbon/Ribbon';
 import { FlashMessageViewChannel } from './components/FlashMessages/FlashMessageViewChannel';
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { PokemonApp } from './PokemonApp/PokemonApp';
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
 import { About } from '../About/About';
@@ -10,16 +9,21 @@ import { Suspense } from 'react';
 import { Spinner } from '../components';
 import { WeatherStationList } from './PokemonApp/components/WeatherStationList/WeatherStationList';
 import { WeatherDetail } from './PokemonApp/components/WeatherDetailList/WeatherDetail';
+import { PokemonArena } from './PokemonApp/components/PokemonArena/PokemonArena';
 export function App() {
   const menu = [
     <NavLink key="pokemon" to="/pokemon">
       Pokemon
     </NavLink>,
-    <NavLink key="about" to="/about">
-      About
-    </NavLink>,
+
     <NavLink key="weather" to="/weather">
       Weather
+    </NavLink>,
+    <NavLink key="arena" to="/arena">
+      Arena
+    </NavLink>,
+    <NavLink key="about" to="/about">
+      About
     </NavLink>
   ];
 
@@ -56,6 +60,10 @@ export function App() {
                 <Route
                   path="weather"
                   element={<WeatherStationList></WeatherStationList>}
+                ></Route>
+                <Route
+                  path="arena"
+                  element={<PokemonArena></PokemonArena>}
                 ></Route>
               </Routes>
             </Suspense>
