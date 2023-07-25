@@ -32,7 +32,7 @@ export function PokemonArenaCard({ id }: Props) {
               <Card className="border p-2 " key={pokemon.id}>
                 <b className="text-lg capitalize">{pokemon.name}</b>
                 <div className="flex justify-center">
-                  <img src={pokemon.sprites.front}></img>
+                  <img src={pokemon.sprites.front} alt={pokemon.name}></img>
                 </div>
               </Card>
             </button>

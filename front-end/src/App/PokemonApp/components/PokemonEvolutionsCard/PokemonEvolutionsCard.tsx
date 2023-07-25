@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { AsyncContent, Card } from '../../../../components';
+import { AsyncContent, Button, Card } from '../../../../components';
 import { POKEMON_CACHE_KEY, GetEvolutions } from '../../PokemonServices';
 import { Pokemon } from '../../PokemonTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -35,6 +35,15 @@ export function PokemonEvolutionsCard({ pokemon }: Props) {
                 ) : null}
               </Fragment>
             ))}
+            <Link to="evolution">
+              <Button>
+                <FontAwesomeIcon
+                  className="mr-4 flex"
+                  icon={faEdit}
+                ></FontAwesomeIcon>
+                Edit
+              </Button>
+            </Link>
           </Card>
         ) : null
       }

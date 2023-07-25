@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card } from '../components';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCloudArrowDown,
+  faEnvelope,
+  faMailReply,
+  faPhone,
+  faVoicemail
+} from '@fortawesome/free-solid-svg-icons';
 
 export function About() {
   return (
@@ -14,9 +20,15 @@ export function About() {
       >
         Linked In
       </a>
-      <div className="flex items-center gap-4">
-        <FontAwesomeIcon className="" icon={faPhone}></FontAwesomeIcon>
-        <p>+31640185591</p>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex items-center">
+          <FontAwesomeIcon className="mr-2" icon={faPhone} />
+          <p>+31640185591</p>
+        </div>
+        <div className="flex items-center">
+          <FontAwesomeIcon className="mr-2" icon={faEnvelope} />
+          <p>dhwbrouwer@outlook.com</p>
+        </div>
       </div>
     </Card>
   );
