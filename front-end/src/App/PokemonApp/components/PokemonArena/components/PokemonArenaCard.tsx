@@ -15,30 +15,27 @@ export function PokemonArenaCard({ id }: Props) {
     queryFn: () => GetPokemon(id)
   });
 
+  function handleClick() {
+    setStats(!stats);
+  }
   return (
     <>
-      {stats ? (
-        <AsyncContent result={result}>
-          {(pokemon) => (
-            <button onClick={() => setStats(!stats)}>
-              <PokemonStats pokemon={pokemon}></PokemonStats>
-            </button>
-          )}
-        </AsyncContent>
-      ) : (
-        <AsyncContent result={result}>
-          {(pokemon) => (
-            <button onClick={() => setStats(!stats)}>
+      <AsyncContent result={result}>
+        {(pokemon) => (
+          <button onClick={handleClick}>
+            {stats ? (
+              <PokemonStats pokemon={pokemon} />
+            ) : (
               <Card className="border p-2 " key={pokemon.id}>
                 <b className="text-lg capitalize">{pokemon.name}</b>
                 <div className="flex justify-center">
-                  <img src={pokemon.sprites.front} alt={pokemon.name}></img>
+                  <img src={pokemon.sprites.front}></img>
                 </div>
               </Card>
-            </button>
-          )}
-        </AsyncContent>
-      )}
+            )}
+          </button>
+        )}
+      </AsyncContent>
     </>
   );
 }

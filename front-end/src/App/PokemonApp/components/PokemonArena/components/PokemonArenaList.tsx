@@ -2,10 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AsyncContent, SearchInput } from '../../../../../components';
+import {
+  AsyncContent,
+  Empty,
+  NotFound,
+  SearchInput
+} from '../../../../../components';
 import { POKEMON_CACHE_KEY, GetAllPokemon } from '../../../PokemonServices';
 import { useState } from 'react';
 import { PokemonArenaCard } from './PokemonArenaCard';
+import { PokemonCard } from '../../PokemonList/components/PokemonCard';
 
 export function PokemonArenaList() {
   const [query, setQuery] = useState('');
@@ -32,14 +38,19 @@ export function PokemonArenaList() {
                 defaultValue={''}
               ></SearchInput>
 
-              {pokemonPage.content.map((singlePokemon) => (
-                <div className="grid gap-4 mb-4 mt-4">
-                  <PokemonArenaCard
-                    key={singlePokemon.id}
-                    id={singlePokemon.id}
-                  ></PokemonArenaCard>
-                </div>
-              ))}
+              {pokemonPage.content.length === 0 ? (
+                query ? (
+                  <NotFound>No Pokemon found</NotFound>
+                ) : (
+                  <Empty>There are no pokemon yet</Empty>
+                )
+              ) : (
+                pokemonPage.content.map((singlePokemon) => (
+                  <div className="grid gap-4 my-4">
+                    <PokemonArenaCard id={singlePokemon.id}></PokemonArenaCard>
+                  </div>
+                ))
+              )}
             </div>
           </>
         )}

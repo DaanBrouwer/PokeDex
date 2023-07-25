@@ -84,7 +84,7 @@ export function PokemonHookForm({ values, stats, type }: Props) {
     pokemonData.append('form', JSON.stringify(form));
 
     if (form.id === -1) {
-      const response = await axios.post('/api/pokmeon', pokemonData);
+      const response = await axios.post('/api/pokemon', pokemonData);
       return response.data as Pokemon;
     } else {
       const response = await axios.put(`/api/pokemon/${form.id}`, pokemonData);

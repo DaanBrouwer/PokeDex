@@ -7,7 +7,7 @@ export const WEATHER_CACHE_KEY = 'weather';
 export async function GetAllWeather(page: number, query: string) {
   const response = await axios.get('/api/weatherstation', {
     params: {
-      size: 200,
+      size: 15,
       page,
       query
     }
