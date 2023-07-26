@@ -19,7 +19,7 @@ export function WeatherDetailCard({ station }: Props) {
           <div className="flex flex-col items-center">
             <img
               className="h-32 w-32"
-              src={`weatherIcons/${station.status}.svg`}
+              src={`/weatherIcons/${station.status}.svg`}
               alt="Weather Icon"
             />
             <p className="">
